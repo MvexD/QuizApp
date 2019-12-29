@@ -8,5 +8,5 @@ class Question (
     var answerB:String?,
     var answerC:String?,
     var answerD:String?,
-    var correctAnswer:String?
+    var correctAnswer:String?,
 )
