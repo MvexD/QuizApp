@@ -9,6 +9,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import com.example.quizapp.DBHelper.DBHelper
 import com.example.quizapp.Model.Question
 import kotlinx.android.synthetic.main.activity_quiz.*
@@ -31,7 +32,7 @@ class QuizActivity : AppCompatActivity() {
     private var radio2: RadioButton? = null
     private var radio3: RadioButton? = null
     private var radio4: RadioButton? = null
-    private var mSubmit: RadioButton? = null
+    private var mSubmit: AppCompatButton? = null
 
 
 
@@ -51,8 +52,8 @@ class QuizActivity : AppCompatActivity() {
         mSubmit = findViewById(R.id.button_confirm_next)
 
 
-        val questionDb = DBHelper(this)
-        questionSetsList = questionDb.questionSet.
+        val questionDb = DBHelper.getInstance(this)
+        questionSetsList = questionDb.getQuestions()
 
 
         showQuestion()
@@ -72,22 +73,32 @@ class QuizActivity : AppCompatActivity() {
 
 
     private fun showQuestion(){
-        radio1!!.setTextColor(colorStateList)
-        radio2!!.setTextColor(colorStateList)
-        radio3!!.setTextColor(colorStateList)
-        radio4!!.setTextColor(colorStateList)
+        currQuestion = questionSetsList!![0]
+
+        questionText!!.text = currQuestion!!.getquestionText()
+
+        radio1!!.text = currQuestion!!.getanswerA()
+        radio2!!.text = currQuestion!!.getanswerB()
+        radio3!!.text = currQuestion!!.getanswerC()
+        radio4!!.text = currQuestion!!.getanswerD()
+
+        radio1!!.setTextColor(Color.BLACK)
+        radio2!!.setTextColor(Color.BLACK)
+        radio3!!.setTextColor(Color.BLACK)
+        radio4!!.setTextColor(Color.BLACK)
 
         radioGroup!!.clearCheck()
 
+        
     }
 
     private fun check(){
         ans = true
 
         val radioSelected = findViewById<View>(radioGroup!!.checkedRadioButtonId) as RadioButton
-        val answer = radioGroup!!.indexOfChild(radioSelected) + 1
+        val answer = radioGroup!!.indexOfChild(radioSelected)
 
-        if (answer == currQuestion!!.getcorrectAnswer()){
+        if (currQuestion!!.getcorrectAnswer()!!.split(",").contains(('A' + answer).toString())){
             score ++
             textScore!!.text = "Score: $score"
         }
@@ -95,30 +106,33 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun showRightAns(){
-
         radio1!!.setTextColor(Color.RED)
         radio2!!.setTextColor(Color.RED)
         radio3!!.setTextColor(Color.RED)
         radio4!!.setTextColor(Color.RED)
 
-        when(currQuestion!!.getcorrectAnswer()){
-            1 -> {
-                radio1!!.setTextColor(Color.GREEN)
-                questionText!!.text = "Odpowiedz A jest poprawna"
+        currQuestion!!.getcorrectAnswer()!!.split(",").forEach {
+            when(it){
+                "A" -> {
+                    radio1!!.setTextColor(Color.GREEN)
+                    questionText!!.text = "Odpowiedz A jest poprawna"
+                }
+                "B" -> {
+                    radio2!!.setTextColor(Color.GREEN)
+                    questionText!!.text = "Odpowiedz A jest poprawna"
+                }
+                "C" -> {
+                    radio3!!.setTextColor(Color.GREEN)
+                    questionText!!.text = "Odpowiedz A jest poprawna"
+                }
+                "D" -> {
+                    radio4!!.setTextColor(Color.GREEN)
+                    questionText!!.text = "Odpowiedz A jest poprawna"
+                }
             }
-            2 -> {
-                radio2!!.setTextColor(Color.GREEN)
-                questionText!!.text = "Odpowiedz A jest poprawna"
-            }
-            3 -> {
-                radio3!!.setTextColor(Color.GREEN)
-                questionText!!.text = "Odpowiedz A jest poprawna"
-            }
-            4 -> {
-                radio4!!.setTextColor(Color.GREEN)
-                questionText!!.text = "Odpowiedz A jest poprawna"
-            }
+
         }
         mSubmit!!.text="finish"
     }
+
 }

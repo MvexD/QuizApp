@@ -7,12 +7,12 @@ class Question {
     private var answerB: String? = null
     private var answerC: String? = null
     private var answerD: String? = null
-    private var correctAnswer: Int = 0
+    private var correctAnswer: String? = null
 
 
     constructor() {}
 
-    constructor(id: Int, questionText: String, answerA: String, answerB: String, answerC: String, answerD: String, correctAnswer: Int) {
+    constructor(id: Int, questionText: String, answerA: String, answerB: String, answerC: String, answerD: String, correctAnswer: String) {
     this.questionText = questionText
     this.answerA = answerA
     this.answerB = answerB
@@ -70,10 +70,10 @@ class Question {
         this.answerD = answerD
     }
     //pobieranie odpowiedz
-    fun getcorrectAnswer(): Int{
+    fun getcorrectAnswer(): String?{
         return correctAnswer
     }
-    fun setcorrectAnswer(correctAnswer: Int){
+    fun setcorrectAnswer(correctAnswer: String){
         this.correctAnswer = correctAnswer
     }
 }

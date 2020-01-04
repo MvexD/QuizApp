@@ -8,40 +8,34 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 class DBHelper(context: Context):SQLiteAssetHelper(context, DB_NAME,null,DB_VER){
     private var db: SQLiteDatabase? = null
     val questionSet: List<Question>
-    get() {
 
-        val questionSetsList = ArrayList<Question>()
+        get() {
+            val questionSetsList = ArrayList<Question>()
 
-        db = readableDatabase
+            db = readableDatabase
 
-        fun getQuestion(QuestionID: Int): MutableList<Question> {
-            val db = instance!!.writableDatabase
-            val questionList = ArrayList<Question>()
-            val c = db.rawQuery("SELECT * FROM Question ORDER BY RANDOM() LIMIT 30", null)
-
-
-            if (!c.moveToFirst()) {
-                while (!c.isAfterLast) {
-                    val question = Question()
-                    question.getid(c.getInt(c.getColumnIndex("QuestionID")))
-                    question.setquestionText(c.getString(c.getColumnIndex("QuestionText")))
-                    question.setanswerA(c.getString(c.getColumnIndex("AnswerA")))
-                    question.setanswerB(c.getString(c.getColumnIndex("AnswerB")))
-                    question.setanswerC(c.getString(c.getColumnIndex("AnswerC")))
-                    question.setanswerD(c.getString(c.getColumnIndex("AnswerD")))
-                    question.setcorrectAnswer(c.getInt(c.getColumnIndex("CorrectAnswer")))
-                    questionList.add(question)
-                    c.moveToNext()
-                }
-
-            }
-            c.close()
-
-            return questionList
-
+            return questionSetsList
         }
-        return questionSetsList
 
+    fun getQuestions(): MutableList<Question> {
+        val db = instance!!.writableDatabase
+        val questionList = ArrayList<Question>()
+        val c = db.rawQuery("SELECT * FROM Question ORDER BY RANDOM() LIMIT 30", null)
+
+        while (c.moveToNext()) {
+            val question = Question()
+            question.getid(c.getInt(c.getColumnIndex("ID")))
+            question.setquestionText(c.getString(c.getColumnIndex("QuestionText")))
+            question.setanswerA(c.getString(c.getColumnIndex("AnswerA")))
+            question.setanswerB(c.getString(c.getColumnIndex("AnswerB")))
+            question.setanswerC(c.getString(c.getColumnIndex("AnswerC")))
+            question.setanswerD(c.getString(c.getColumnIndex("AnswerD")))
+            question.setcorrectAnswer(c.getString(c.getColumnIndex("CorrectAnswer")))
+            questionList.add(question)
+        }
+        c.close()
+
+        return questionList
     }
 
     companion object {
