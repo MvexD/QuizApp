@@ -13,6 +13,12 @@ import androidx.appcompat.widget.AppCompatButton
 import com.example.quizapp.DBHelper.DBHelper
 import com.example.quizapp.Model.Question
 import kotlinx.android.synthetic.main.activity_quiz.*
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import java.util.*
+
 
 class QuizActivity : AppCompatActivity() {
 
@@ -24,6 +30,9 @@ class QuizActivity : AppCompatActivity() {
     private var colorStateList: ColorStateList? = null
 
 
+
+
+
     private var questionText: TextView? = null
     private var textScore: TextView? = null
     private var textCounter: TextView? = null
@@ -33,6 +42,8 @@ class QuizActivity : AppCompatActivity() {
     private var radio3: RadioButton? = null
     private var radio4: RadioButton? = null
     private var mSubmit: AppCompatButton? = null
+
+    private val fragmentManager = supportFragmentManager
 
 
 
@@ -89,7 +100,7 @@ class QuizActivity : AppCompatActivity() {
 
         radioGroup!!.clearCheck()
 
-        
+
     }
 
     private fun check(){
@@ -99,11 +110,36 @@ class QuizActivity : AppCompatActivity() {
         val answer = radioGroup!!.indexOfChild(radioSelected)
 
         if (currQuestion!!.getcorrectAnswer()!!.split(",").contains(('A' + answer).toString())){
+            loadNextQuestion()
             score ++
             textScore!!.text = "Score: $score"
+
+
+        }else {
+            showRightAns()
+            finishQuizActivity()
         }
-        showRightAns()
+
     }
+    private fun loadNextQuestion() {
+        currQuestion = questionSetsList!![+1]
+        questionText!!.text = currQuestion!!.getquestionText()
+
+        radio1!!.text = currQuestion!!.getanswerA()
+        radio2!!.text = currQuestion!!.getanswerB()
+        radio3!!.text = currQuestion!!.getanswerC()
+        radio4!!.text = currQuestion!!.getanswerD()
+
+        radio1!!.setTextColor(Color.BLACK)
+        radio2!!.setTextColor(Color.BLACK)
+        radio3!!.setTextColor(Color.BLACK)
+        radio4!!.setTextColor(Color.BLACK)
+
+        radioGroup!!.clearCheck()
+    }
+
+
+
 
     private fun showRightAns(){
         radio1!!.setTextColor(Color.RED)
@@ -116,23 +152,32 @@ class QuizActivity : AppCompatActivity() {
                 "A" -> {
                     radio1!!.setTextColor(Color.GREEN)
                     questionText!!.text = "Odpowiedz A jest poprawna"
+
                 }
                 "B" -> {
                     radio2!!.setTextColor(Color.GREEN)
-                    questionText!!.text = "Odpowiedz A jest poprawna"
+                    questionText!!.text = "Odpowiedz B jest poprawna"
+
                 }
                 "C" -> {
                     radio3!!.setTextColor(Color.GREEN)
-                    questionText!!.text = "Odpowiedz A jest poprawna"
+                    questionText!!.text = "Odpowiedz C jest poprawna"
+
                 }
                 "D" -> {
                     radio4!!.setTextColor(Color.GREEN)
-                    questionText!!.text = "Odpowiedz A jest poprawna"
+                    questionText!!.text = "Odpowiedz D jest poprawna"
+
                 }
             }
+            mSubmit!!.text="Finish"
 
         }
-        mSubmit!!.text="finish"
+        //mSubmit!!.text="Next"
+        //finishQuizActivity()
+    }
+    private fun finishQuizActivity(){
+        finish()
     }
 
 }
