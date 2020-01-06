@@ -24,7 +24,7 @@ class QuizActivity : AppCompatActivity() {
 
 
     private var ans: Boolean = false
-    private var questionSetsList: MutableList<Question>?=null
+    private var questionSetsList: MutableList<Question>? = null
     private var currQuestion: Question? = null
     private var score: Int = 0
     private var colorStateList: ColorStateList? = null
@@ -78,7 +78,7 @@ class QuizActivity : AppCompatActivity() {
                     Toast.makeText(this@QuizActivity, "Wybierz odpowiedz", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                showQuestion()
+                    showQuestion()
             }
         }
     }
@@ -89,7 +89,6 @@ class QuizActivity : AppCompatActivity() {
         currQuestion = questionSetsList!![0]
 
         questionText!!.text = currQuestion!!.getquestionText()
-
         radio1!!.text = currQuestion!!.getanswerA()
         radio2!!.text = currQuestion!!.getanswerB()
         radio3!!.text = currQuestion!!.getanswerC()
@@ -102,10 +101,7 @@ class QuizActivity : AppCompatActivity() {
 
         radioGroup!!.clearCheck()
 
-        questionSetsList.removeAt(0)
-
-
-
+        questionSetsList!!.removeAt(0)
 
     }
 
@@ -113,48 +109,29 @@ class QuizActivity : AppCompatActivity() {
         ans = true
 
         val radioSelected = findViewById<View>(radioGroup!!.checkedRadioButtonId) as RadioButton
-        val answer = radioGroup!!.indexOfChild(radioSelected)
+        val answer = radioGroup!!.indexOfChild(radioSelected) + 1
 
         if (currQuestion!!.getcorrectAnswer()!!.split(",").contains(('A' + answer).toString())){
-            loadNextQuestion()
             score ++
             textScore!!.text = "Score: $score"
-
-
+            showNextQuestion()
         }else {
             showRightAns()
-            finishQuizActivity()
         }
 
     }
-    private fun loadNextQuestion() {
-        currQuestion = questionSetsList!![0]
-        questionText!!.text = currQuestion!!.getquestionText()
-
-        radio1!!.text = currQuestion!!.getanswerA()
-        radio2!!.text = currQuestion!!.getanswerB()
-        radio3!!.text = currQuestion!!.getanswerC()
-        radio4!!.text = currQuestion!!.getanswerD()
-
-        radio1!!.setTextColor(Color.BLACK)
-        radio2!!.setTextColor(Color.BLACK)
-        radio3!!.setTextColor(Color.BLACK)
-        radio4!!.setTextColor(Color.BLACK)
-
-        radioGroup!!.clearCheck()
+    private fun showNextQuestion(){
+        showQuestion()
     }
 
-
-
-
-    private fun showRightAns(){
+    private fun showRightAns() {
         radio1!!.setTextColor(Color.RED)
         radio2!!.setTextColor(Color.RED)
         radio3!!.setTextColor(Color.RED)
         radio4!!.setTextColor(Color.RED)
 
         currQuestion!!.getcorrectAnswer()!!.split(",").forEach {
-            when(it){
+            when (it) {
                 "A" -> {
                     radio1!!.setTextColor(Color.GREEN)
                     questionText!!.text = "Odpowiedz A jest poprawna"
@@ -177,10 +154,9 @@ class QuizActivity : AppCompatActivity() {
                 }
             }
             mSubmit!!.text="Finish"
-
+            finishQuizActivity()
         }
-        //mSubmit!!.text="Next"
-        //finishQuizActivity()
+
     }
     private fun finishQuizActivity(){
         finish()
