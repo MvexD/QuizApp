@@ -24,7 +24,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
         android:text="Najlepszy Wynik: 0"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        />
+
 
     <Button
         android:id="@+id/button_start_quiz"
@@ -32,6 +34,15 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="Rozpocznij Quiz" />
+
+    <Button
+        android:id="@+id/button_quick_start_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/button_start_quiz"
+        android:layout_marginBottom="-50dp"
+        android:text="Szybki Quiz" />
 
 
 </RelativeLayout>

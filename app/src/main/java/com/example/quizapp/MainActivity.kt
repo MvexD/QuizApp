@@ -3,9 +3,6 @@ package com.example.quizapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +17,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             //startQuiz();
             }
+        button_quick_start_quiz.setOnClickListener{
+            val intent = Intent(this, QuickQuizActivity::class.java)
+            startActivity(intent)
+        }
         }
 
     //private fun startQuiz() {
