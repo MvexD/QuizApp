@@ -1,5 +1,7 @@
 package com.example.quizapp
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -30,9 +32,6 @@ class QuizActivity : AppCompatActivity() {
     private var colorStateList: ColorStateList? = null
 
 
-
-
-
     private var questionText: TextView? = null
     private var textScore: TextView? = null
     private var textCounter: TextView? = null
@@ -55,7 +54,6 @@ class QuizActivity : AppCompatActivity() {
 
         questionText = findViewById(R.id.text_view_question)
         textScore = findViewById(R.id.text_view_score)
-        textCounter = findViewById(R.id.text_view_countdown)
         radioGroup = findViewById(R.id.radio_group)
         radio1 = findViewById(R.id.radio_button1)
         radio2 = findViewById(R.id.radio_button2)
@@ -117,7 +115,7 @@ class QuizActivity : AppCompatActivity() {
 
         if (currQuestion!!.getcorrectAnswer()!!.split(",").contains(('A' + answer).toString())) {
             score++
-            textScore!!.text = "Score: $score"
+            textScore!!.text = "Wynik: $score"
             showNextQuestion()
         }else {
             showRightAns()
@@ -161,6 +159,7 @@ class QuizActivity : AppCompatActivity() {
             mSubmit!!.text="Finish"
             mSubmit!!.setOnClickListener{
                 finishQuizActivity()
+
             }
 
 
@@ -168,7 +167,16 @@ class QuizActivity : AppCompatActivity() {
 
     }
     private fun finishQuizActivity(){
+        Intent().putExtra(FINAL_SCORE, score.toString())
+        val intent = Intent(this, ScoresActivity::class.java)
+        startActivity(intent)
         finish()
+    }
+
+    companion object{
+        val FINAL_SCORE = ""
+
+
     }
 
 }
