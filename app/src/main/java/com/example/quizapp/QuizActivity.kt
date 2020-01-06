@@ -24,7 +24,7 @@ class QuizActivity : AppCompatActivity() {
 
 
     private var ans: Boolean = false
-    private var questionSetsList: List<Question>?=null
+    private var questionSetsList: MutableList<Question>?=null
     private var currQuestion: Question? = null
     private var score: Int = 0
     private var colorStateList: ColorStateList? = null
@@ -63,6 +63,7 @@ class QuizActivity : AppCompatActivity() {
         mSubmit = findViewById(R.id.button_confirm_next)
 
 
+
         val questionDb = DBHelper.getInstance(this)
         questionSetsList = questionDb.getQuestions()
 
@@ -83,6 +84,7 @@ class QuizActivity : AppCompatActivity() {
     }
 
 
+
     private fun showQuestion(){
         currQuestion = questionSetsList!![0]
 
@@ -99,6 +101,10 @@ class QuizActivity : AppCompatActivity() {
         radio4!!.setTextColor(Color.BLACK)
 
         radioGroup!!.clearCheck()
+
+        questionSetsList.removeAt(0)
+
+
 
 
     }
@@ -122,7 +128,7 @@ class QuizActivity : AppCompatActivity() {
 
     }
     private fun loadNextQuestion() {
-        currQuestion = questionSetsList!![+1]
+        currQuestion = questionSetsList!![0]
         questionText!!.text = currQuestion!!.getquestionText()
 
         radio1!!.text = currQuestion!!.getanswerA()
