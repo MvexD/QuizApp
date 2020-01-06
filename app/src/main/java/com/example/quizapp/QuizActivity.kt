@@ -43,6 +43,7 @@ class QuizActivity : AppCompatActivity() {
     private var radio4: RadioButton? = null
     private var mSubmit: AppCompatButton? = null
 
+
     private val fragmentManager = supportFragmentManager
 
 
@@ -98,28 +99,32 @@ class QuizActivity : AppCompatActivity() {
         radio2!!.setTextColor(Color.BLACK)
         radio3!!.setTextColor(Color.BLACK)
         radio4!!.setTextColor(Color.BLACK)
+        ans = false
+        mSubmit!!.text = "Confirm"
 
-        radioGroup!!.clearCheck()
 
         questionSetsList!!.removeAt(0)
 
+        radioGroup!!.clearCheck()
+
     }
 
-    private fun check(){
+    private fun check() {
         ans = true
 
         val radioSelected = findViewById<View>(radioGroup!!.checkedRadioButtonId) as RadioButton
-        val answer = radioGroup!!.indexOfChild(radioSelected) + 1
+        val answer = radioGroup!!.indexOfChild(radioSelected)
 
-        if (currQuestion!!.getcorrectAnswer()!!.split(",").contains(('A' + answer).toString())){
-            score ++
+        if (currQuestion!!.getcorrectAnswer()!!.split(",").contains(('A' + answer).toString())) {
+            score++
             textScore!!.text = "Score: $score"
             showNextQuestion()
         }else {
             showRightAns()
         }
-
     }
+
+
     private fun showNextQuestion(){
         showQuestion()
     }
@@ -154,7 +159,11 @@ class QuizActivity : AppCompatActivity() {
                 }
             }
             mSubmit!!.text="Finish"
-            finishQuizActivity()
+            mSubmit!!.setOnClickListener{
+                finishQuizActivity()
+            }
+
+
         }
 
     }
