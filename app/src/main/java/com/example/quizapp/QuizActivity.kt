@@ -28,7 +28,7 @@ class QuizActivity : AppCompatActivity() {
     private var ans: Boolean = false
     private var questionSetsList: MutableList<Question>? = null
     private var currQuestion: Question? = null
-    private var score: Int = 0
+    //private var score: Int = 0
     private var colorStateList: ColorStateList? = null
 
 
@@ -174,8 +174,8 @@ class QuizActivity : AppCompatActivity() {
     }
 
     companion object{
-        val FINAL_SCORE = ""
-
+        public var score: Int = 0
+        val FINAL_SCORE = "Twój wynik to: $score"
 
     }
 

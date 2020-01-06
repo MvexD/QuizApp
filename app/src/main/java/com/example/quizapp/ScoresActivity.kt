@@ -7,6 +7,9 @@ import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlinx.android.synthetic.main.activity_scores.*
 import android.content.SharedPreferences
 import android.content.Context
+import android.content.Intent
+import androidx.appcompat.widget.AppCompatButton
+import com.example.quizapp.QuizActivity.Companion.score
 import kotlin.random.Random
 
 
@@ -21,6 +24,11 @@ class ScoresActivity : AppCompatActivity() {
 
         finalScore = findViewById(R.id.EndScore)
         loadFinalScore()
+        
+        RestartButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -29,6 +37,9 @@ class ScoresActivity : AppCompatActivity() {
         finalScore!!.text = preferences.getString(QuizActivity.FINAL_SCORE, "$score")
 
     }
+
+
+
 
 
     companion object {
