@@ -24,13 +24,12 @@ class ScoresActivity : AppCompatActivity() {
 
         finalScore = findViewById(R.id.EndScore)
         loadFinalScore()
-        
+
         RestartButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
-
 
     private fun loadFinalScore(){
         val preferences = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -38,17 +37,11 @@ class ScoresActivity : AppCompatActivity() {
 
     }
 
-
-
-
-
     companion object {
 
         private val REQUEST_CODE = 1
         val PREFS = "shared_prefs"
         val HIGH_SCORE = "high_score"
     }
-
-
 }
 
